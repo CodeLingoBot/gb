@@ -25,7 +25,7 @@ func cgo(pkg *Package) (*Action, []string, []string, error) {
 	}
 }
 
-// cgo produces a an Action representing the cgo steps
+// cgo14; cgo produces a an Action representing the cgo steps
 // an ofile representing the result of the cgo steps
 // a set of .go files for compilation, and an error.
 func cgo14(pkg *Package) (*Action, []string, []string, error) {
@@ -103,7 +103,7 @@ func cgo14(pkg *Package) (*Action, []string, []string, error) {
 	return &action, []string{defun, imports, allo}, cgofiles, nil
 }
 
-// cgo produces a an Action representing the cgo steps
+// cgo15; cgo produces a an Action representing the cgo steps
 // an ofile representing the result of the cgo steps
 // a set of .go files for compilation, and an error.
 func cgo15(pkg *Package) (*Action, []string, []string, error) {
@@ -344,7 +344,7 @@ func envList(key, def string) []string {
 	return strings.Fields(v)
 }
 
-// Return the flags to use when invoking the C or C++ compilers, or cgo.
+// cflags; Return the flags to use when invoking the C or C++ compilers, or cgo.
 func cflags(p *Package, def bool) (cppflags, cflags, cxxflags, ldflags []string) {
 	var defaults string
 	if def {
@@ -358,7 +358,7 @@ func cflags(p *Package, def bool) (cppflags, cflags, cxxflags, ldflags []string)
 	return
 }
 
-// call pkg-config and return the cflags and ldflags.
+// pkgconfig; call pkg-config and return the cflags and ldflags.
 func pkgconfig(p *Package) ([]string, []string, error) {
 	if len(p.CgoPkgConfig) == 0 {
 		return nil, nil, nil // nothing to do

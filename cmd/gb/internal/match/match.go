@@ -51,7 +51,7 @@ func ImportPaths(srcdir, cwd string, args []string) []string {
 	return out
 }
 
-// matchPattern(pattern)(name) reports whether
+// matchPattern reports whether
 // name matches pattern.  Pattern is a limited glob
 // pattern in which '...' means 'any string' and there
 // is no other special syntax.
@@ -84,7 +84,7 @@ func hasPathPrefix(s, prefix string) bool {
 	}
 }
 
-// treeCanMatchPattern(pattern)(name) reports whether
+// treeCanMatchPattern reports whether
 // name or children of name can possibly match pattern.
 // Pattern is the same limited glob accepted by matchPattern.
 func treeCanMatchPattern(pattern string) func(name string) bool {

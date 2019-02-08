@@ -10,7 +10,7 @@ import "testing"
 // so that they can use cgo (import "C").
 // These wrappers are here for gotest to find.
 
-// func TestAlign(t *testing.T)                 { testAlign(t) }
+// TestConst; func TestAlign(t *testing.T)                 { testAlign(t) }
 func TestConst(t *testing.T)                 { testConst(t) }
 func TestEnum(t *testing.T)                  { testEnum(t) }
 func TestAtol(t *testing.T)                  { testAtol(t) }

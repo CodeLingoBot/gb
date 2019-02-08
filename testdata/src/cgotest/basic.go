@@ -149,7 +149,7 @@ func benchCgoCall(b *testing.B) {
 	}
 }
 
-// Issue 2470.
+// testUnsignedInt checks a case when Issue 2470.
 func testUnsignedInt(t *testing.T) {
 	a := (int64)(C.UINT32VAL)
 	b := (int64)(0xc008427b)
@@ -158,7 +158,7 @@ func testUnsignedInt(t *testing.T) {
 	}
 }
 
-// Static (build-time) test that syntax traversal visits all operands of s[i:j:k].
+// sliceOperands; Static (build-time) test that syntax traversal visits all operands of s[i:j:k].
 func sliceOperands(array [2000]int) {
 	_ = array[C.KILO:C.KILO:C.KILO] // no type error
 }

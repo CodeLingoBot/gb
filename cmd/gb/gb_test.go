@@ -52,7 +52,7 @@ func init() {
 	testgb += exeSuffix
 }
 
-// The TestMain function creates a gb command for testing purposes and
+// TestMain; function creates a gb command for testing purposes and
 // deletes it after the tests have been run.
 func TestMain(m *testing.M) {
 	flag.Parse()
@@ -558,7 +558,7 @@ func (t *T) resetReadOnlyFlagAll(path string) {
 	}
 }
 
-// Invoking plain "gb" should print usage to stderr and exit with 2.
+// TestNoArguments checks a case when Invoking plain "gb" should print usage to stderr and exit with 2.
 func TestNoArguments(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -569,7 +569,7 @@ func TestNoArguments(t *testing.T) {
 	gb.grepStderr("^Usage:", `expected "Usage: ..."`)
 }
 
-// Invoking plain "gb" outside a project should print to stderr and exit with 2.
+// TestOutsideProject checks a case when Invoking plain "gb" outside a project should print to stderr and exit with 2.
 func TestOutsideProject(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -580,7 +580,7 @@ func TestOutsideProject(t *testing.T) {
 	gb.grepStderr("^Usage:", `expected "Usage: ..."`)
 }
 
-// Invoking gb outside a project should print to stderr and exit with 2.
+// TestInfoOutsideProject checks a case when Invoking gb outside a project should print to stderr and exit with 2.
 func TestInfoOutsideProject(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -594,7 +594,7 @@ func TestInfoOutsideProject(t *testing.T) {
 	gb.grepStderr(regex, "expected FATAL")
 }
 
-// Invoking gb outside a project with -R should succeed.
+// TestInfoWithMinusR checks a case when Invoking gb outside a project with -R should succeed.
 func TestInfoWithMinusR(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -637,7 +637,7 @@ func TestInfoWithArgs(t *testing.T) {
 	}
 }
 
-// Only succeeds if source order is preserved.
+// TestSourceFileNameOrderPreserved checks a case when Only succeeds if source order is preserved.
 func TestSourceFileNameOrderPreserved(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -822,7 +822,7 @@ func helloworld() {
 	gb.mustNotExist(filepath.Join(gb.tempdir, "pkg")) // ensure no pkg directory is created
 }
 
-// test that compiling A in test scope compiles B in regular scope
+// TestTestDependantPackage tests that compiling A in test scope compiles B in regular scope
 func TestTestDependantPackage(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -976,6 +976,7 @@ func TestX(t *testing.T) {
 }
 `
 
+// TestTestGbTestPassesUnknownFlags checks a case when 
 // https://github.com/constabulary/gb/issues/349
 func TestTestGbTestPassesUnknownFlags(t *testing.T) {
 	gb := T{T: t}
@@ -1008,6 +1009,7 @@ func TestY(t *testing.T) {
 }
 `
 
+// TestGbTestIssue473a checks a case when 
 // https://github.com/constabulary/gb/issues/473
 func TestGbTestIssue473a(t *testing.T) {
 	gb := T{T: t}
@@ -1077,7 +1079,7 @@ func TestGbTestIssue473d(t *testing.T) {
 	gb.mustNotExist(filepath.Join(gb.tempdir, "pkg")) // ensure no pkg directory is created
 }
 
-// gb list with an empty project succeeds and returns nothing.
+// TestGbListEmpty checks a case when gb list with an empty project succeeds and returns nothing.
 func TestGbListEmpty(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -1091,7 +1093,7 @@ func TestGbListEmpty(t *testing.T) {
 	gb.mustBeEmpty(tmpdir)
 }
 
-// gb list with a project with source at the top level should return nothing.
+// TestGbListSrcTopLevel checks a case when gb list with a project with source at the top level should return nothing.
 func TestGbListSrcTopLevel(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -1124,7 +1126,7 @@ func mklistfixture(gb *T) {
 	gb.tempFile("src/r/s/s.go", "package s; const S = 's'")
 }
 
-// gb list with a few projects should show them all.
+// TestGbList checks a case when gb list with a few projects should show them all.
 func TestGbList(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -1182,7 +1184,7 @@ func skipWindows(t *testing.T, msg string) {
 	}
 }
 
-// issue 481: check that project detection works correctly
+// TestProjectRootDetectionWorksWithParentSymlink checks a case when issue 481: check that project detection works correctly
 // in the presence of symlinks above the project root.
 func TestProjectRootDetectionWorksWithParentSymlink(t *testing.T) {
 	skipWindows(t, "no symlinks, lol")
@@ -1212,7 +1214,7 @@ func TestProjectRootDetectionWorksWithDirectSymlink(t *testing.T) {
 	gb.grepStdout("^a$", "expected 'a'")
 }
 
-// issue 157
+// TestTestWorksWithProjectSymlink checks a case when issue 157
 func TestTestWorksWithProjectSymlink(t *testing.T) {
 	skipWindows(t, "no symlinks, lol")
 	gb := T{T: t}
@@ -1261,7 +1263,7 @@ func TestA(t *testing.T) {
 	gb.grepStdout("^a$", "expected 'a'")
 }
 
-// test -race flag is wired up correctly
+// TestBuildRaceFlag tests -race flag is wired up correctly
 func TestBuildRaceFlag(t *testing.T) {
 	if !canRace {
 		t.Skip("skipping because race detector not supported")
@@ -1312,7 +1314,7 @@ func TestRaceFlag(t *testing.T) {
 	gb.mustNotExist(filepath.Join(gb.tempdir, "pkg")) // ensure no pkg directory is created
 }
 
-// check that go test -race builds and runs a racy binary, and that it finds the race.
+// TestTestRace checks that go test -race builds and runs a racy binary, and that it finds the race.
 func TestTestRace(t *testing.T) {
 	if !canRace {
 		t.Skip("skipping because race detector not supported")
@@ -1342,7 +1344,7 @@ func TestRaceMapRW(t *testing.T) {
 	gb.mustBeEmpty(tmpdir)
 }
 
-// check that missing -race support generates error message.
+// TestRaceMissing checks that missing -race support generates error message.
 func TestRaceMissing(t *testing.T) {
 	if canRace {
 		t.Skip("skipping because race detector is available")
@@ -1376,7 +1378,7 @@ func TestRaceMapRW(t *testing.T) {
 	gb.mustBeEmpty(tmpdir)
 }
 
-// test that gb will no build the stdlib directly, only as transitive deps.
+// TestNoBuildStdlib tests that gb will no build the stdlib directly, only as transitive deps.
 func TestNoBuildStdlib(t *testing.T) {
 	t.Skip("constabulary/gb#505")
 	gb := T{T: t}
@@ -1420,6 +1422,7 @@ func main() { println("hello world") }
 	gb.wantExecutable(gb.path("bin", name), "expected $PROJECT/bin/p-$GOOS-$GOARCH")
 }
 
+// TestGbBuildBuildsPackgeCalledCmd checks a case when 
 // https://github.com/constabulary/gb/issues/416
 func TestGbBuildBuildsPackgeCalledCmd(t *testing.T) {
 	gb := T{T: t}
@@ -1442,6 +1445,7 @@ func main() { println("hello world") }
 	gb.wantExecutable(gb.path("bin", name), "expected $PROJECT/bin/"+name)
 }
 
+// TestGbBuildSubPackageOfCmd checks a case when 
 // https://github.com/constabulary/gb/issues/492
 func TestGbBuildSubPackageOfCmd(t *testing.T) {
 	gb := T{T: t}
@@ -1462,6 +1466,7 @@ func main() { println("hello world") }
 	gb.wantExecutable(gb.path("bin", name), "expected $PROJECT/bin/hello")
 }
 
+// TestIssue515 checks a case when 
 // https://github.com/constabulary/gb/issues/515
 func TestIssue515(t *testing.T) {
 	gb := T{T: t}
@@ -1656,7 +1661,7 @@ func main() {
 	gb.mustBeEmpty(tmpdir)
 }
 
-// goconvey (and probably others) do not parse flags passed to the
+// TestIssue605 checks a case when goconvey (and probably others) do not parse flags passed to the
 // test binary, they just expect them to be present in their raw form
 // in os.Args. As such -test.v and -test.v=true are not the same.
 // Assert that gb is passing the latter form.
@@ -1687,7 +1692,7 @@ func TestFlags(t *testing.T) {
 
 }
 
-// assert the gb build all alias works.
+// TestBuildAll checks a case when assert the gb build all alias works.
 func TestBuildAll(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
@@ -1766,7 +1771,7 @@ func TestIssue707(t *testing.T) {
 	gb.run("test", "issue707")
 }
 
-// check that building the test package works with .cpp files
+// TestTestWithCxxFiles checks that building the test package works with .cpp files
 func TestTestWithCxxFiles(t *testing.T) {
 	gb := T{T: t}
 	defer gb.cleanup()
